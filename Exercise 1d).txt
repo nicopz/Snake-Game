@@ -1,0 +1,5 @@
+File "dependencies": Executable Jar Files
+File "out": compiled files of the project
+File "source": contains the actual source code and uncompiled code. The package hierarchy is 
+also there. In the ressources folder are images that are used for the game.
+.bat files: Windows batch files are used to automate compilation, execution or deployment
