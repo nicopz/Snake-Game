@@ -1,5 +1,8 @@
 package de.hsaalen;
 import org.junit.Test;
+
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 public class SnakeTest
 {
@@ -19,17 +22,39 @@ public class SnakeTest
         assertEquals( coordinate.y, 50 );
     }
     @Test
-    public void test_move_snake()
+    public void test_move_snake_right()
     {
         Snake snake = new Snake( 3, 10 );
-        snake.move( Direction.up );
-        snake.move( Direction.up );
+        snake.move( Direction.right );
+        snake.move( Direction.right );
+
+        IntPair coordinate = snake.position(0);
+        assertEquals( coordinate.x, 70 );
+        assertEquals( coordinate.y, 50 );
+        assertEquals( snake.length(), 3 );
+    }
+    @Test
+    public void test_move_snake_left()
+    {
+        Snake snake = new Snake( 3, 10 );
+        snake.move( Direction.left );
+        snake.move( Direction.left );
+        snake.move( Direction.left );
+
+        IntPair coordinate = snake.position(0);
+        assertEquals( coordinate.x, 20 );
+        assertEquals( coordinate.y, 50 );
+        assertEquals( snake.length(), 3 );
+    }
+    @Test
+    public void test_move_snake_start()
+    {
+        Snake snake = new Snake( 3, 10 );
 
         IntPair coordinate = snake.position(0);
         assertEquals( coordinate.x, 50 );
-        assertEquals( coordinate.y, 30 );
+        assertEquals( coordinate.y, 50 );
         assertEquals( snake.length(), 3 );
-
     }
 
     @Test
@@ -51,4 +76,5 @@ public class SnakeTest
             snake.move( Direction.left );
         assertTrue( snake.is_outside_board( 300, 300 ) );
     }
+
 }
