@@ -14,20 +14,20 @@ import java.awt.event.KeyEvent;
 import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
-    private final GameLogic gameLogic;
+    private final Logic logic;
     private Timer timer;
     private Image ball;
     private Image apple;
     private Image head;
 
     public Board() {
-        gameLogic = new GameLogic();
-        gameLogic.initializeGame();
+        logic = new Logic();
+        logic.initializeGame();
 
         addKeyListener(new TAdapter());
         setBackground(Color.black);
         setFocusable(true);
-        setPreferredSize(new Dimension(gameLogic.width_in_pixels, gameLogic.height_in_pixels));
+        setPreferredSize(new Dimension(logic.width_in_pixels, logic.height_in_pixels));
         loadImages();
     }
 
@@ -38,7 +38,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void start_game_loop_timer() {
-        timer = new Timer(gameLogic.game_loop_duration_in_ms, this);
+        timer = new Timer(logic.game_loop_duration_in_ms, this);
         timer.start();
     }
 
@@ -49,11 +49,11 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void doDrawing(Graphics g) {
-        if (gameLogic.is_in_game()) {
-            Apple apple = gameLogic.getApple();
+        if (logic.is_in_game()) {
+            Apple apple = logic.getApple();
             g.drawImage(this.apple, apple.getX(), apple.getY(), this);
 
-            Snake snake = gameLogic.getSnake();
+            Snake snake = logic.getSnake();
             for (int z = 0; z < snake.length(); z++) {
                 if (z == 0) {
                     g.drawImage(head, snake.position(z).x, snake.position(z).y, this);
@@ -74,15 +74,15 @@ public class Board extends JPanel implements ActionListener {
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, (gameLogic.width_in_pixels - metr.stringWidth(msg)) / 2, gameLogic.height_in_pixels / 2);
+        g.drawString(msg, (logic.width_in_pixels - metr.stringWidth(msg)) / 2, logic.height_in_pixels / 2);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (gameLogic.is_in_game()) {
-            gameLogic.checkApple();
-            gameLogic.checkCollision();
-            gameLogic.moveSnake();
+        if (logic.is_in_game()) {
+            logic.checkApple();
+            logic.checkCollision();
+            logic.moveSnake();
         }
         repaint();
     }
@@ -91,10 +91,10 @@ public class Board extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
-            if (key == KeyEvent.VK_LEFT) gameLogic.setDirection(Direction.left);
-            if (key == KeyEvent.VK_RIGHT) gameLogic.setDirection(Direction.right);
-            if (key == KeyEvent.VK_UP) gameLogic.setDirection(Direction.up);
-            if (key == KeyEvent.VK_DOWN) gameLogic.setDirection(Direction.down);
+            if (key == KeyEvent.VK_LEFT) logic.setDirection(Direction.left);
+            if (key == KeyEvent.VK_RIGHT) logic.setDirection(Direction.right);
+            if (key == KeyEvent.VK_UP) logic.setDirection(Direction.up);
+            if (key == KeyEvent.VK_DOWN) logic.setDirection(Direction.down);
         }
     }
 }

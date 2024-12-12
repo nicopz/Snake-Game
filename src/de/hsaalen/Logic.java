@@ -1,6 +1,6 @@
 package de.hsaalen;
 
-public class GameLogic {
+public class Logic {
     public  final int width_in_pixels = 300;
     public  final int height_in_pixels = 300;
     public  final int title_size_in_pixles = 10;
@@ -12,7 +12,7 @@ public class GameLogic {
     private Snake snake;
     private Apple apple;
 
-    public GameLogic() {
+    public Logic() {
         this.inGame = true;
         this.direction = Direction.right;
     }
