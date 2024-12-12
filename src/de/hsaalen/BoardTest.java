@@ -25,4 +25,18 @@ public class BoardTest {
         Board board = new Board();
         assertNotNull( board );
     }
+
+    @Test
+    public void testApple(){
+        Board board = new Board();
+        Apple apple = new Apple(board.tile_size_in_pixels, board.tile_size_in_pixels);
+        int r_x = (int) (Math.random() * board.maximum_tile_index_x());
+        int r_y = (int) (Math.random() * board.maximum_tile_index_y());
+        apple.setX(r_x*board.tile_size_in_pixels);
+        apple.setY(r_y*board.tile_size_in_pixels);
+        assertNotEquals(null ,apple);
+        assertEquals(r_x*board.tile_size_in_pixels, apple.getX());
+        assertEquals(r_y*board.tile_size_in_pixels, apple.getY());
+    }
+
 }

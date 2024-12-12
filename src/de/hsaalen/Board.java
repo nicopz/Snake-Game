@@ -152,12 +152,13 @@ public class Board extends JPanel implements ActionListener {
     }
 
 
-    private void place_apple_at_random_location() {
+    public void place_apple_at_random_location() {
 
         init_apple = new Apple(tile_size_in_pixels, tile_size_in_pixels);
 
         int r = (int) (Math.random() * maximum_tile_index_x());
         init_apple.setX(r*tile_size_in_pixels);
+
 
         r = (int) (Math.random() * maximum_tile_index_y());
         init_apple.setY(r*tile_size_in_pixels);
