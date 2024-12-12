@@ -27,7 +27,7 @@ public class Board extends JPanel implements ActionListener {
         addKeyListener(new TAdapter());
         setBackground(Color.black);
         setFocusable(true);
-        setPreferredSize(new Dimension(GameLogic.width_in_pixels, GameLogic.height_in_pixels));
+        setPreferredSize(new Dimension(gameLogic.width_in_pixels, gameLogic.height_in_pixels));
         loadImages();
     }
 
@@ -38,7 +38,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void start_game_loop_timer() {
-        timer = new Timer(GameLogic.game_loop_duration_in_ms, this);
+        timer = new Timer(gameLogic.game_loop_duration_in_ms, this);
         timer.start();
     }
 
@@ -49,7 +49,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void doDrawing(Graphics g) {
-        if (gameLogic.isInGame()) {
+        if (gameLogic.is_in_game()) {
             Apple apple = gameLogic.getApple();
             g.drawImage(this.apple, apple.getX(), apple.getY(), this);
 
@@ -74,12 +74,12 @@ public class Board extends JPanel implements ActionListener {
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, (GameLogic.width_in_pixels - metr.stringWidth(msg)) / 2, GameLogic.height_in_pixels / 2);
+        g.drawString(msg, (gameLogic.width_in_pixels - metr.stringWidth(msg)) / 2, gameLogic.height_in_pixels / 2);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (gameLogic.isInGame()) {
+        if (gameLogic.is_in_game()) {
             gameLogic.checkApple();
             gameLogic.checkCollision();
             gameLogic.moveSnake();

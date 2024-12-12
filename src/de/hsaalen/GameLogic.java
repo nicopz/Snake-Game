@@ -1,12 +1,11 @@
 package de.hsaalen;
 
 public class GameLogic {
-    public static final int width_in_pixels = 300;
-    public static final int height_in_pixels = 300;
-    public static final int title_size_in_pixles = 10;
-    public static final int MAXIMUM_SNAKE_LENGTH = 900;
-    public static final int game_loop_duration_in_ms = 140;
-    public static final int initial_snake_size = 3;
+    public  final int width_in_pixels = 300;
+    public  final int height_in_pixels = 300;
+    public  final int title_size_in_pixles = 10;
+    public  final int game_loop_duration_in_ms = 140;
+    public  final int initial_snake_size = 3;
 
     private Direction direction;
     private boolean inGame;
@@ -30,8 +29,8 @@ public class GameLogic {
 
     public void place_apple_at_random_location() {
         apple = new Apple(title_size_in_pixles, title_size_in_pixles);
-        int x = (int) (Math.random() * maximumTileIndexX()) * title_size_in_pixles;
-        int y = (int) (Math.random() * maximumTileIndexY()) * title_size_in_pixles;
+        int x = (int) (Math.random() * maximum_tile_index_x()) * title_size_in_pixles;
+        int y = (int) (Math.random() * maximum_tile_index_y()) * title_size_in_pixles;
         apple.setX(x);
         apple.setY(y);
     }
@@ -53,15 +52,15 @@ public class GameLogic {
         snake.move(direction);
     }
 
-    public int maximumTileIndexX() {
+    public int maximum_tile_index_x() {
         return (width_in_pixels / title_size_in_pixles) - 1;
     }
 
-    public int maximumTileIndexY() {
+    public int maximum_tile_index_y() {
         return (height_in_pixels / title_size_in_pixles) - 1;
     }
 
-    public boolean isInGame() {
+    public boolean is_in_game() {
         return inGame;
     }
 
