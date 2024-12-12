@@ -1,12 +1,12 @@
 package de.hsaalen;
 
 public class GameLogic {
-    public static final int WIDTH_IN_PIXELS = 300;
-    public static final int HEIGHT_IN_PIXELS = 300;
-    public static final int TILE_SIZE_IN_PIXELS = 10;
+    public static final int width_in_pixels = 300;
+    public static final int height_in_pixels = 300;
+    public static final int title_size_in_pixles = 10;
     public static final int MAXIMUM_SNAKE_LENGTH = 900;
-    public static final int GAME_LOOP_DURATION_IN_MS = 140;
-    public static final int INITIAL_SNAKE_SIZE = 3;
+    public static final int game_loop_duration_in_ms = 140;
+    public static final int initial_snake_size = 3;
 
     private Direction direction;
     private boolean inGame;
@@ -19,18 +19,19 @@ public class GameLogic {
     }
 
     public void initializeGame() {
-        placeSnakeAtInitialLocation();
-        placeAppleAtRandomLocation();
+        place_snake_at_initial_location();
+        place_apple_at_random_location();
+
     }
 
-    public void placeSnakeAtInitialLocation() {
-        snake = new Snake(INITIAL_SNAKE_SIZE, TILE_SIZE_IN_PIXELS);
+    public void place_snake_at_initial_location() {
+        snake = new Snake(initial_snake_size, title_size_in_pixles);
     }
 
-    public void placeAppleAtRandomLocation() {
-        apple = new Apple(TILE_SIZE_IN_PIXELS, TILE_SIZE_IN_PIXELS);
-        int x = (int) (Math.random() * maximumTileIndexX()) * TILE_SIZE_IN_PIXELS;
-        int y = (int) (Math.random() * maximumTileIndexY()) * TILE_SIZE_IN_PIXELS;
+    public void place_apple_at_random_location() {
+        apple = new Apple(title_size_in_pixles, title_size_in_pixles);
+        int x = (int) (Math.random() * maximumTileIndexX()) * title_size_in_pixles;
+        int y = (int) (Math.random() * maximumTileIndexY()) * title_size_in_pixles;
         apple.setX(x);
         apple.setY(y);
     }
@@ -38,12 +39,12 @@ public class GameLogic {
     public void checkApple() {
         if (snake.head_position().x == apple.getX() && snake.head_position().y == apple.getY()) {
             snake.grow(direction);
-            placeAppleAtRandomLocation();
+            place_apple_at_random_location();
         }
     }
 
     public void checkCollision() {
-        if (snake.is_snake_colliding(WIDTH_IN_PIXELS, HEIGHT_IN_PIXELS)) {
+        if (snake.is_snake_colliding(width_in_pixels, height_in_pixels)) {
             inGame = false;
         }
     }
@@ -53,11 +54,11 @@ public class GameLogic {
     }
 
     public int maximumTileIndexX() {
-        return (WIDTH_IN_PIXELS / TILE_SIZE_IN_PIXELS) - 1;
+        return (width_in_pixels / title_size_in_pixles) - 1;
     }
 
     public int maximumTileIndexY() {
-        return (HEIGHT_IN_PIXELS / TILE_SIZE_IN_PIXELS) - 1;
+        return (height_in_pixels / title_size_in_pixles) - 1;
     }
 
     public boolean isInGame() {

@@ -14,65 +14,46 @@ import java.awt.event.KeyEvent;
 import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
-
-    public final int width_in_pixels = 300;
-    public final int height_in_pixels = 300;
-    public final int tile_size_in_pixels = 10;
-    public final int maximum_snake_length = 900;
-    private final int game_loop_duration_in_ms = 140;
-    public final int initial_snake_size = 3;
-
-    public Snake snake;
-    public Apple init_apple;
-
-    Direction direction = Direction.right;
-
-    private boolean inGame = true;
-
+    private final GameLogic gameLogic;
     private Timer timer;
     private Image ball;
     private Image apple;
     private Image head;
 
     public Board() {
+        gameLogic = new GameLogic();
+        gameLogic.initializeGame();
+
         addKeyListener(new TAdapter());
         setBackground(Color.black);
         setFocusable(true);
-        setPreferredSize(new Dimension(width_in_pixels, height_in_pixels));
+        setPreferredSize(new Dimension(GameLogic.width_in_pixels, GameLogic.height_in_pixels));
         loadImages();
     }
 
     private void loadImages() {
-
-        ImageIcon iid = new ImageIcon("src/resources/dot.png");
-        ball = iid.getImage();
-
-        ImageIcon iia = new ImageIcon("src/resources/apple.png");
-        apple = iia.getImage();
-
-        ImageIcon iih = new ImageIcon("src/resources/head.png");
-        head = iih.getImage();
+        ball = new ImageIcon("src/resources/dot.png").getImage();
+        apple = new ImageIcon("src/resources/apple.png").getImage();
+        head = new ImageIcon("src/resources/head.png").getImage();
     }
 
-
-    public void start_game_loop_timer(){
-        timer = new Timer(game_loop_duration_in_ms, this);
+    public void start_game_loop_timer() {
+        timer = new Timer(GameLogic.GAME_LOOP_DURATION_IN_MS, this);
         timer.start();
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         doDrawing(g);
     }
-    
+
     private void doDrawing(Graphics g) {
-        
-        if (inGame) {
+        if (gameLogic.isInGame()) {
+            Apple apple = gameLogic.getApple();
+            g.drawImage(this.apple, apple.getX(), apple.getY(), this);
 
-            g.drawImage(apple, init_apple.getX(), init_apple.getY(),this);
-
+            Snake snake = gameLogic.getSnake();
             for (int z = 0; z < snake.length(); z++) {
                 if (z == 0) {
                     g.drawImage(head, snake.position(z).x, snake.position(z).y, this);
@@ -80,111 +61,40 @@ public class Board extends JPanel implements ActionListener {
                     g.drawImage(ball, snake.position(z).x, snake.position(z).y, this);
                 }
             }
-
             Toolkit.getDefaultToolkit().sync();
-
         } else {
-
             gameOver(g);
-        }        
+        }
     }
 
     private void gameOver(Graphics g) {
-        
         String msg = "Game Over";
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, (width_in_pixels - metr.stringWidth(msg)) / 2, height_in_pixels / 2);
-    }
-
-    private void checkApple() {
-
-        if ((snake.head_position().x == init_apple.getX()) && (snake.head_position().y == init_apple.getY())){
-
-            snake.grow(direction);
-            place_apple_at_random_location();
-        }
-    }
-
-    private void move() {
-        snake.move(direction);
-    }
-
-    private void checkCollision() {
-        if(snake.is_snake_colliding(width_in_pixels, height_in_pixels)) {
-            inGame = false;
-        }
-    }
-
-    public int maximum_tile_index_x()
-    {
-        return ( width_in_pixels / tile_size_in_pixels ) - 1;
-    }
-
-    public int maximum_tile_index_y()
-    {
-        return ( height_in_pixels / tile_size_in_pixels ) - 1;
-    }
-
-    public void place_snake_at_initial_location()
-    {
-        snake = new Snake(3, tile_size_in_pixels);
-    }
-
-
-    public void place_apple_at_random_location() {
-
-        init_apple = new Apple(tile_size_in_pixels, tile_size_in_pixels);
-
-        int r = (int) (Math.random() * maximum_tile_index_x());
-        init_apple.setX(r*tile_size_in_pixels);
-
-
-        r = (int) (Math.random() * maximum_tile_index_y());
-        init_apple.setY(r*tile_size_in_pixels);
-
+        g.drawString(msg, (GameLogic.width_in_pixels - metr.stringWidth(msg)) / 2, GameLogic.height_in_pixels / 2);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        if (inGame) {
-
-            checkApple();
-            checkCollision();
-            move();
+        if (gameLogic.isInGame()) {
+            gameLogic.checkApple();
+            gameLogic.checkCollision();
+            gameLogic.moveSnake();
         }
-
         repaint();
     }
 
     private class TAdapter extends KeyAdapter {
-
         @Override
         public void keyPressed(KeyEvent e) {
-
             int key = e.getKeyCode();
-
-            if ((key == KeyEvent.VK_LEFT)) {
-                direction = Direction.left;
-            }
-
-            if ((key == KeyEvent.VK_RIGHT)) {
-                direction = Direction.right;
-
-            }
-
-            if ((key == KeyEvent.VK_UP)) {
-                direction = Direction.up;
-
-            }
-
-            if ((key == KeyEvent.VK_DOWN)) {
-                direction = Direction.down;
-            }
+            if (key == KeyEvent.VK_LEFT) gameLogic.setDirection(Direction.left);
+            if (key == KeyEvent.VK_RIGHT) gameLogic.setDirection(Direction.right);
+            if (key == KeyEvent.VK_UP) gameLogic.setDirection(Direction.up);
+            if (key == KeyEvent.VK_DOWN) gameLogic.setDirection(Direction.down);
         }
     }
 }
