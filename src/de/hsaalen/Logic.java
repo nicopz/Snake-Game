@@ -1,5 +1,8 @@
 package de.hsaalen;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Logic {
     public  final int width_in_pixels = 300;
     public  final int height_in_pixels = 300;
@@ -12,17 +15,32 @@ public class Logic {
     private boolean inGame;
     private Snake snake;
     private Apple apple;
+    private List<IntPair> obstacles;
     public int appleCount = 0;
 
     public Logic() {
         this.inGame = true;
         this.direction = Direction.right;
+        this.obstacles = new ArrayList<>();
     }
 
     public void initializeGame() {
         place_snake_at_initial_location();
         place_apple_at_random_location();
+        generateObstacles();
+    }
+    private void generateObstacles() {
+        // Hier können Sie beliebige Hindernisse an zufälligen Positionen hinzufügen
+        // Beispiel: Wir fügen 5 Hindernisse hinzu
+        for (int i = 0; i < 5; i++) {
+            int x = (int) (Math.random() * maximum_tile_index_x()) * title_size_in_pixles;
+            int y = (int) (Math.random() * maximum_tile_index_y()) * title_size_in_pixles;
+            obstacles.add(new IntPair(x, y));
+        }
+    }
 
+    public List<IntPair> getObstacles() {
+        return obstacles;
     }
 
     public void place_snake_at_initial_location() {
@@ -51,9 +69,18 @@ public class Logic {
     }
 
     public void checkCollision() {
-        if (snake.is_snake_colliding(width_in_pixels, height_in_pixels)) {
+        if (snake.is_snake_colliding(width_in_pixels, height_in_pixels) || isCollidingWithObstacles()) {
             inGame = false;
         }
+    }
+
+    private boolean isCollidingWithObstacles(){
+        for(IntPair obstacle : obstacles){
+            if(snake.head_position().x == obstacle.x && snake.head_position().y == obstacle.y){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void moveSnake() {

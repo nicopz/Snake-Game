@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
@@ -55,7 +56,7 @@ public class Board extends JPanel implements ActionListener {
             Apple apple = logic.getApple();
             g.drawImage(this.apple, apple.getX(), apple.getY(), this);
 
-            if(logic.appleCount>=3 && logic.appleCount%3==0){
+            if (logic.appleCount >= 3 && logic.appleCount % 3 == 0) {
                 g.drawImage(this.goldenApple, apple.getX(), apple.getY(), this);
             }
 
@@ -67,6 +68,13 @@ public class Board extends JPanel implements ActionListener {
                     g.drawImage(ball, snake.position(z).x, snake.position(z).y, this);
                 }
             }
+
+            List<IntPair> obstacles = logic.getObstacles();
+            g.setColor(Color.RED);  // Wählen Sie eine auffällige Farbe für die Hindernisse
+            for (IntPair obstacle : obstacles) {
+                g.fillRect(obstacle.x, obstacle.y, logic.title_size_in_pixles, logic.title_size_in_pixles);
+            }
+
             Toolkit.getDefaultToolkit().sync();
         } else {
             gameOver(g);
