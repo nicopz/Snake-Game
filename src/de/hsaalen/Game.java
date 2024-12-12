@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 public class Game extends JFrame {
     private Board board;
-    private WindowInitializer windowInitializer;
     public Game() {
         board = new Board();
         add(board);
