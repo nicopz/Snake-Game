@@ -39,4 +39,10 @@ public class BoardTest {
         assertEquals(r_y*board.tile_size_in_pixels, apple.getY());
     }
 
+    @Test
+    public void init_board(){
+        Board board = new Board();
+        assertNotNull( board );
+    }
+
 }
