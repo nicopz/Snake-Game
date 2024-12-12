@@ -36,6 +36,10 @@ public class Logic {
     }
 
     public void checkApple() {
+        if (snake.head_position().x == apple.getX() && snake.head_position().y == apple.getY() && snake.length()%3==0 && snake.length()>=6) {
+            snake.grow_3fields(direction);
+            place_apple_at_random_location();
+        }
         if (snake.head_position().x == apple.getX() && snake.head_position().y == apple.getY()) {
             snake.grow(direction);
             place_apple_at_random_location();

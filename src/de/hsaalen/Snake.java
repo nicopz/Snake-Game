@@ -41,6 +41,14 @@ public class Snake
         head_position().move( direction, tile_size_in_pixels );
     }
 
+    public void grow_3fields(Direction direction){
+        for (int i = 0; i < 3; i++) {
+            IntPair new_head_position = head_position().clone();
+            new_head_position.move(direction, tile_size_in_pixels);
+            positions.add(0, new_head_position);
+        }
+    }
+
     public void grow( Direction direction )
     {
         IntPair new_head_position = head_position().clone();
