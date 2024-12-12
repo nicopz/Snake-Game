@@ -11,9 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
 
@@ -27,9 +25,6 @@ public class Board extends JPanel implements ActionListener {
     public Snake snake;
     public Apple init_apple;
 
-
-    private int current_snake_size;
-
     Direction direction = Direction.right;
 
     private boolean inGame = true;
@@ -40,18 +35,11 @@ public class Board extends JPanel implements ActionListener {
     private Image head;
 
     public Board() {
-        initBoard();
-    }
-    
-    private void initBoard() {
-
         addKeyListener(new TAdapter());
         setBackground(Color.black);
         setFocusable(true);
-
         setPreferredSize(new Dimension(width_in_pixels, height_in_pixels));
         loadImages();
-        initGame();
     }
 
     private void loadImages() {
@@ -66,12 +54,7 @@ public class Board extends JPanel implements ActionListener {
         head = iih.getImage();
     }
 
-    private void initGame() {
 
-        place_snake_at_initial_location();
-        place_apple_at_random_location();
-        start_game_loop_timer();
-    }
     public void start_game_loop_timer(){
         timer = new Timer(game_loop_duration_in_ms, this);
         timer.start();
