@@ -70,7 +70,7 @@ public class Board extends JPanel implements ActionListener {
             }
 
             List<IntPair> obstacles = logic.getObstacles();
-            g.setColor(Color.RED);  // Wählen Sie eine auffällige Farbe für die Hindernisse
+            g.setColor(Color.RED);
             for (IntPair obstacle : obstacles) {
                 g.fillRect(obstacle.x, obstacle.y, logic.title_size_in_pixles, logic.title_size_in_pixles);
             }

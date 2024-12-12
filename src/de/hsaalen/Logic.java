@@ -30,8 +30,6 @@ public class Logic {
         generateObstacles();
     }
     private void generateObstacles() {
-        // Hier können Sie beliebige Hindernisse an zufälligen Positionen hinzufügen
-        // Beispiel: Wir fügen 5 Hindernisse hinzu
         for (int i = 0; i < 5; i++) {
             int x = (int) (Math.random() * maximum_tile_index_x()) * title_size_in_pixles;
             int y = (int) (Math.random() * maximum_tile_index_y()) * title_size_in_pixles;
@@ -74,9 +72,9 @@ public class Logic {
         }
     }
 
-    private boolean isCollidingWithObstacles(){
-        for(IntPair obstacle : obstacles){
-            if(snake.head_position().x == obstacle.x && snake.head_position().y == obstacle.y){
+    public boolean isCollidingWithObstacles() {
+        for (IntPair obstacle : obstacles) {
+            if (snake.head_position().x == obstacle.x && snake.head_position().y == obstacle.y) {
                 return true;
             }
         }
