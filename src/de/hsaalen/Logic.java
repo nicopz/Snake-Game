@@ -7,10 +7,12 @@ public class Logic {
     public  final int game_loop_duration_in_ms = 140;
     public  final int initial_snake_size = 3;
 
+
     private Direction direction;
     private boolean inGame;
     private Snake snake;
     private Apple apple;
+    public int appleCount = 0;
 
     public Logic() {
         this.inGame = true;
@@ -39,10 +41,12 @@ public class Logic {
         if (snake.head_position().x == apple.getX() && snake.head_position().y == apple.getY() && snake.length()%3==0 && snake.length()>=6) {
             snake.grow_3fields(direction);
             place_apple_at_random_location();
+            appleCount++;
         }
         if (snake.head_position().x == apple.getX() && snake.head_position().y == apple.getY()) {
             snake.grow(direction);
             place_apple_at_random_location();
+            appleCount++;
         }
     }
 
@@ -79,4 +83,5 @@ public class Logic {
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
+
 }

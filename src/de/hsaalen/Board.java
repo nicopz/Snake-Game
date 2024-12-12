@@ -18,6 +18,7 @@ public class Board extends JPanel implements ActionListener {
     private Timer timer;
     private Image ball;
     private Image apple;
+    private Image goldenApple;
     private Image head;
 
     public Board() {
@@ -35,6 +36,7 @@ public class Board extends JPanel implements ActionListener {
         ball = new ImageIcon("src/resources/dot.png").getImage();
         apple = new ImageIcon("src/resources/apple.png").getImage();
         head = new ImageIcon("src/resources/head.png").getImage();
+        goldenApple = new ImageIcon("src/resources/golden_apple_10x10.png").getImage();
     }
 
     public void start_game_loop_timer() {
@@ -52,6 +54,10 @@ public class Board extends JPanel implements ActionListener {
         if (logic.is_in_game()) {
             Apple apple = logic.getApple();
             g.drawImage(this.apple, apple.getX(), apple.getY(), this);
+
+            if(logic.appleCount>=3 && logic.appleCount%3==0){
+                g.drawImage(this.goldenApple, apple.getX(), apple.getY(), this);
+            }
 
             Snake snake = logic.getSnake();
             for (int z = 0; z < snake.length(); z++) {
