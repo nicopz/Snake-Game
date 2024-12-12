@@ -119,7 +119,6 @@ public class Board extends JPanel implements ActionListener {
 
     private void checkApple() {
 
-        //if ((snake.head_position().x == apple_x) && (snake.head_position().y == apple_y))
         if ((snake.head_position().x == init_apple.getX()) && (snake.head_position().y == init_apple.getY())){
 
             snake.grow(direction);
