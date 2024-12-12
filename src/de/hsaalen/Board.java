@@ -38,7 +38,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void start_game_loop_timer() {
-        timer = new Timer(GameLogic.GAME_LOOP_DURATION_IN_MS, this);
+        timer = new Timer(GameLogic.game_loop_duration_in_ms, this);
         timer.start();
     }
 
