@@ -4,8 +4,7 @@ import org.junit.Test;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
-public class SnakeTest
-{
+public class SnakeTest {
     @Test
     public void test_initialization()
     {
@@ -75,6 +74,33 @@ public class SnakeTest
         for ( int i = 0; i < 10; i++ )
             snake.move( Direction.left );
         assertTrue( snake.is_outside_board( 300, 300 ) );
+    }
+
+    @Test
+    public void test_is_colliding_with_obstacles()
+    {
+        Logic logic = new Logic();
+        logic.initializeGame();
+        Snake snake = logic.getSnake();
+        IntPair headPosition = snake.head_position();
+        IntPair obstacle = new IntPair(50, 50);
+        logic.getObstacles().add(obstacle);
+        logic.checkCollision();
+        assertFalse(logic.is_in_game());
+    }
+
+    @Test
+    public void test_is_colliding_with_obstacles_after_movement()
+    {
+        Logic logic = new Logic();
+        logic.initializeGame();
+        Snake snake = logic.getSnake();
+        IntPair obstacle = new IntPair(60, 50);
+        logic.getObstacles().add(obstacle);
+        logic.setDirection(Direction.right);
+        logic.moveSnake();
+        logic.checkCollision();
+        assertFalse(logic.is_in_game());
     }
 
 }
